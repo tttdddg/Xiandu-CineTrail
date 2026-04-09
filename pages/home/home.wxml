@@ -1,0 +1,23 @@
+<!-- pages/home/home.wxml -->
+<view class="container">
+  <!-- 地图组件 -->
+  <map 
+    id="map"
+    style="width: 100%; height: 100vh;"
+    latitude="28.656"
+    longitude="119.648"
+    scale="16"
+    show-location="true"
+    markers="{{markers}}"
+    bindmarkertap="onMarkerTap"
+  ></map>
+  
+  <!-- Marker 点击弹出层 -->
+  <view class="marker-popup" wx:if="{{selectedMarker}}">
+    <view class="popup-content">
+      <text class="popup-title">{{selectedMarker.name}}</text>
+      <text class="popup-desc">{{selectedMarker.desc}}</text>
+      <button class="popup-btn" bindtap="goToDetail">查看详情</button>
+    </view>
+  </view>
+</view>

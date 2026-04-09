@@ -1,0 +1,12 @@
+<!-- pages/login/login.wxml -->
+<view class="container">
+  <view class="splash">
+    <image class="logo" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Xiandu%20Scenic%20Area%20logo%20with%20mountains%20and%20water&image_size=square" mode="aspectFit"></image>
+    <text class="title">仙都影游打卡</text>
+    <text class="subtitle">探索影视取景地，打卡游戏IP关联点</text>
+  </view>
+  
+  <view class="login-section">
+    <button class="login-btn" bindtap="login">微信一键登录</button>
+  </view>
+</view>

@@ -1,0 +1,27 @@
+<!-- pages/detail/detail.wxml -->
+<view class="container">
+  <!-- 封面图 -->
+  <image class="cover-image" src="{{spot.coverImage}}" mode="aspectFill"></image>
+  
+  <!-- 点位信息 -->
+  <view class="spot-info">
+    <text class="spot-name">{{spot.name}}</text>
+    <view class="spot-type">
+      <text class="type-tag">{{spot.type === 'movie' ? '影视取景地' : '游戏IP关联点'}}</text>
+    </view>
+    <view class="spot-description">
+      {{spot.description}}
+    </view>
+  </view>
+  
+  <!-- 打卡按钮 -->
+  <view class="checkin-section">
+    <button 
+      class="checkin-btn {{isCheckedIn ? 'btn-disabled' : ''}}" 
+      bindtap="checkin"
+      disabled="{{isCheckedIn || isCheckingIn}}"
+    >
+      {{isCheckingIn ? '打卡中...' : (isCheckedIn ? '已打卡' : '打卡')}}
+    </button>
+  </view>
+</view>

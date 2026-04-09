@@ -1,0 +1,58 @@
+/* pages/home/home.wxss */
+.container {
+  position: relative;
+  height: 100vh;
+}
+
+.marker-popup {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border-radius: 20rpx 20rpx 0 0;
+  padding: 32rpx;
+  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.popup-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.popup-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 16rpx;
+}
+
+.popup-desc {
+  font-size: 28rpx;
+  color: #666;
+  text-align: center;
+  margin-bottom: 32rpx;
+  line-height: 1.5;
+}
+
+.popup-btn {
+  width: 80%;
+  height: 72rpx;
+  line-height: 72rpx;
+  font-size: 32rpx;
+  background-color: #007aff;
+  color: white;
+  border-radius: 36rpx;
+}
