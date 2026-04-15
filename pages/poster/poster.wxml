@@ -1,0 +1,16 @@
+<!-- pages/poster/poster.wxml -->
+<view class="container">
+  <view class="poster-wrapper">
+    <canvas canvas-id="posterCanvas" class="poster-canvas" style="width: {{canvasWidth}}px; height: {{canvasHeight}}px;"></canvas>
+    <image class="poster-preview" src="{{posterImage}}" mode="widthFix" wx:if="{{posterImage}}"></image>
+  </view>
+  
+  <view class="poster-actions">
+    <button class="action-btn" bindtap="saveToAlbum">保存到相册</button>
+    <button class="action-btn primary" bindtap="shareToFriends">分享给好友</button>
+  </view>
+  
+  <view class="poster-tips">
+    <text class="tip-text">长按图片保存或分享</text>
+  </view>
+</view>

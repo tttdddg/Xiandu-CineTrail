@@ -3,7 +3,14 @@
     "pages/login/login",
     "pages/home/home",
     "pages/detail/detail",
-    "pages/mine/mine"
+    "pages/mine/mine",
+    "pages/spot-list/spot-list",
+    "pages/comment/comment",
+    "pages/poster/poster",
+    "pages/message/message",
+    "pages/admin/spot-manage",
+    "pages/admin/user-manage",
+    "pages/admin/statistics"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -13,23 +20,38 @@
   },
   "tabBar": {
     "color": "#666",
-    "selectedColor": "#333",
+    "selectedColor": "#007aff",
     "backgroundColor": "#fff",
     "borderStyle": "black",
     "list": [
       {
         "pagePath": "pages/home/home",
-        "text": "首页",
-        "iconPath": "images/home.png",
-        "selectedIconPath": "images/home-active.png"
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/spot-list/spot-list",
+        "text": "点位"
       },
       {
         "pagePath": "pages/mine/mine",
-        "text": "我的",
-        "iconPath": "images/mine.png",
-        "selectedIconPath": "images/mine-active.png"
+        "text": "我的"
       }
     ]
   },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "您的位置信息将用于计算与点位的距离"
+    },
+    "scope.writePhotosAlbum": {
+      "desc": "需要相册权限保存海报图片"
+    },
+    "scope.camera": {
+      "desc": "需要相机权限拍摄打卡照片"
+    }
+  },
+  "requiredPrivateInfos": [
+    "getLocation",
+    "chooseLocation"
+  ],
   "sitemapLocation": "sitemap.json"
 }

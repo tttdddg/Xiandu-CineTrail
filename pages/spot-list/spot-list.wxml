@@ -1,0 +1,100 @@
+<!-- pages/spot-list/spot-list.wxml -->
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <input 
+      class="search-input" 
+      placeholder="搜索点位名称" 
+      bindinput="onSearchInput"
+      value="{{searchKeyword}}"
+    />
+  </view>
+  
+  <!-- 分类标签 -->
+  <scroll-view class="category-scroll" scroll-x="true">
+    <view class="category-list">
+      <view 
+        class="category-item {{currentCategory === 'all' ? 'active' : ''}}" 
+        bindtap="onCategoryChange" 
+        data-category="all"
+      >
+        全部
+      </view>
+      <view 
+        class="category-item {{currentCategory === 'movie' ? 'active' : ''}}" 
+        bindtap="onCategoryChange" 
+        data-category="movie"
+      >
+        影视取景地
+      </view>
+      <view 
+        class="category-item {{currentCategory === 'game' ? 'active' : ''}}" 
+        bindtap="onCategoryChange" 
+        data-category="game"
+      >
+        游戏IP关联点
+      </view>
+      <view 
+        class="category-item {{currentCategory === 'culture' ? 'active' : ''}}" 
+        bindtap="onCategoryChange" 
+        data-category="culture"
+      >
+        文化古迹
+      </view>
+      <view 
+        class="category-item {{currentCategory === 'nature' ? 'active' : ''}}" 
+        bindtap="onCategoryChange" 
+        data-category="nature"
+      >
+        自然风光
+      </view>
+    </view>
+  </scroll-view>
+  
+  <!-- 排序选项 -->
+  <view class="sort-bar">
+    <view class="sort-item {{sortType === 'hot' ? 'active' : ''}}" bindtap="onSortChange" data-sort="hot">
+      热度排序
+    </view>
+    <view class="sort-item {{sortType === 'distance' ? 'active' : ''}}" bindtap="onSortChange" data-sort="distance">
+      距离排序
+    </view>
+    <view class="sort-item {{sortType === 'checkin' ? 'active' : ''}}" bindtap="onSortChange" data-sort="checkin">
+      打卡数排序
+    </view>
+  </view>
+  
+  <!-- 点位列表 -->
+  <view class="spot-list">
+    <view class="empty-tip" wx:if="{{filteredSpots.length === 0}}">
+      暂无点位数据
+    </view>
+    <view 
+      class="spot-item" 
+      wx:for="{{filteredSpots}}" 
+      wx:key="id"
+      bindtap="goToDetail"
+      data-id="{{item.id}}"
+    >
+      <image class="spot-cover" src="{{item.coverImage}}" mode="aspectFill"></image>
+      <view class="spot-info">
+        <view class="spot-header">
+          <text class="spot-name">{{item.name}}</text>
+          <view class="hot-badge">
+            <text class="hot-icon">🔥</text>
+            <text class="hot-value">{{item.hotScore}}</text>
+          </view>
+        </view>
+        <view class="spot-tags">
+          <text class="tag tag-{{item.type}}">{{item.typeName}}</text>
+          <text class="tag" wx:for="{{item.tags}}" wx:key="index" wx:for-item="tag">{{tag}}</text>
+        </view>
+        <view class="spot-stats">
+          <text class="stat-item">📍 {{item.distance || '未知'}}</text>
+          <text class="stat-item">✅ {{item.checkinCount}}人打卡</text>
+        </view>
+        <text class="spot-desc">{{item.description}}</text>
+      </view>
+    </view>
+  </view>
+</view>

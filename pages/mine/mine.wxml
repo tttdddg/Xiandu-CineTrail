@@ -1,32 +1,103 @@
 <!-- pages/mine/mine.wxml -->
 <view class="container">
-  <!-- 用户信息 -->
-  <view class="user-info">
-    <image class="avatar" src="{{userInfo.avatarUrl || 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=default%20user%20avatar&image_size=square'}}"></image>
-    <text class="nickname">{{userInfo.nickName || '未登录'}}</text>
+  <!-- 用户信息卡片 -->
+  <view class="user-card">
+    <view class="user-info">
+      <image class="avatar" src="{{userInfo.avatarUrl || 'https://via.placeholder.com/120'}}"></image>
+      <view class="user-detail">
+        <text class="nickname">{{userInfo.nickName || '未登录'}}</text>
+        <view class="level-badge">
+          <text class="level-icon">🏅</text>
+          <text class="level-text">Lv.{{userLevel}}</text>
+          <text class="level-name">{{levelName}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 成长值进度条 -->
+    <view class="growth-section">
+      <view class="growth-header">
+        <text class="growth-label">成长值</text>
+        <text class="growth-value">{{growthValue}}/{{nextLevelValue}}</text>
+      </view>
+      <view class="growth-bar">
+        <view class="growth-progress" style="width: {{growthPercent}}%"></view>
+      </view>
+      <text class="growth-tip">距离下一等级还需{{needGrowth}}成长值</text>
+    </view>
+  </view>
+  
+  <!-- 勋章展示 -->
+  <view class="badge-section">
+    <view class="section-header">
+      <text class="section-title">我的勋章</text>
+      <text class="section-more" bindtap="viewAllBadges">查看全部 ></text>
+    </view>
+    <view class="badge-list">
+      <view class="badge-item" wx:for="{{badges}}" wx:key="id">
+        <image class="badge-icon" src="{{item.icon}}"></image>
+        <text class="badge-name">{{item.name}}</text>
+      </view>
+      <view class="badge-item locked" wx:for="{{lockedBadges}}" wx:key="id">
+        <text class="badge-icon-text">🔒</text>
+        <text class="badge-name">{{item.name}}</text>
+      </view>
+    </view>
   </view>
   
   <!-- 打卡统计 -->
   <view class="stats-card">
-    <view class="stat-item">
-      <text class="stat-number">{{totalCheckins}}</text>
-      <text class="stat-label">累计打卡</text>
+    <view class="stats-row">
+      <view class="stat-item">
+        <text class="stat-number">{{totalCheckins}}</text>
+        <text class="stat-label">累计打卡</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-number">{{continuousDays}}</text>
+        <text class="stat-label">连续打卡</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-number">{{totalLikes}}</text>
+        <text class="stat-label">获赞数</text>
+      </view>
     </view>
   </view>
   
-  <!-- 打卡记录 -->
-  <view class="checkin-list">
-    <text class="list-title">打卡记录</text>
-    <view wx:if="{{checkins.length === 0}}" class="empty-tip">
-      暂无打卡记录
+  <!-- 统计图表 -->
+  <view class="chart-section">
+    <view class="section-header">
+      <text class="section-title">打卡趋势</text>
     </view>
-    <view wx:else>
-      <view class="checkin-item" wx:for="{{checkins}}" wx:key="index">
-        <view class="item-info">
-          <text class="spot-name">{{item.spotName}}</text>
-          <text class="checkin-time">{{item.checkinTime}}</text>
-        </view>
+    <view class="chart-container">
+      <view class="chart-bar" wx:for="{{chartData}}" wx:key="index">
+        <view class="bar-value" style="height: {{item.percent}}%"></view>
+        <text class="bar-label">{{item.label}}</text>
       </view>
+    </view>
+  </view>
+  
+  <!-- 功能菜单 -->
+  <view class="menu-section">
+    <view class="menu-item" bindtap="goToCheckinList">
+      <text class="menu-icon">📍</text>
+      <text class="menu-text">打卡记录</text>
+      <text class="menu-arrow">></text>
+    </view>
+    <view class="menu-item" bindtap="goToFavorites">
+      <text class="menu-icon">❤️</text>
+      <text class="menu-text">我的收藏</text>
+      <text class="menu-arrow">></text>
+    </view>
+    <view class="menu-item" bindtap="goToMessages">
+      <text class="menu-icon">💬</text>
+      <text class="menu-text">消息中心</text>
+      <view class="menu-badge" wx:if="{{unreadCount > 0}}">{{unreadCount}}</view>
+      <text class="menu-arrow">></text>
+    </view>
+    <view class="menu-item" bindtap="goToSettings">
+      <text class="menu-icon">⚙️</text>
+      <text class="menu-text">设置</text>
+      <text class="menu-arrow">></text>
     </view>
   </view>
   

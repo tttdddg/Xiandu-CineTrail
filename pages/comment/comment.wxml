@@ -1,0 +1,57 @@
+<!-- pages/comment/comment.wxml -->
+<view class="container">
+  <!-- 评论列表 -->
+  <view class="comment-list">
+    <view class="list-header">
+      <text class="list-title">评论 ({{total}})</text>
+    </view>
+    
+    <view class="empty-tip" wx:if="{{comments.length === 0}}">
+      暂无评论，快来抢沙发吧~
+    </view>
+    
+    <view class="comment-item" wx:for="{{comments}}" wx:key="id">
+      <image class="user-avatar" src="{{item.userAvatar || '/images/default-avatar.png'}}"></image>
+      <view class="comment-content">
+        <view class="comment-header">
+          <text class="user-name">{{item.userName}}</text>
+          <text class="comment-time">{{item.timeText}}</text>
+        </view>
+        <text class="comment-text">{{item.content}}</text>
+        <view class="comment-actions">
+          <view class="action-item" bindtap="likeComment" data-id="{{item.id}}">
+            <text class="action-icon">{{item.isLiked ? '❤️' : '🤍'}}</text>
+            <text class="action-count">{{item.likeCount || 0}}</text>
+          </view>
+          <view class="action-item" bindtap="replyComment" data-id="{{item.id}}" data-name="{{item.userName}}">
+            <text class="action-icon">💬</text>
+            <text class="action-text">回复</text>
+          </view>
+        </view>
+        
+        <!-- 回复列表 -->
+        <view class="reply-list" wx:if="{{item.replies && item.replies.length > 0}}">
+          <view class="reply-item" wx:for="{{item.replies}}" wx:key="id" wx:for-item="reply">
+            <text class="reply-user">{{reply.userName}}</text>
+            <text class="reply-text">：{{reply.content}}</text>
+          </view>
+          <view class="more-reply" wx:if="{{item.replyCount > 3}}" bindtap="viewMoreReplies" data-id="{{item.id}}">
+            查看更多{{item.replyCount - 3}}条回复 >
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 评论输入框 -->
+  <view class="comment-input-bar">
+    <input 
+      class="comment-input" 
+      placeholder="{{replyTo ? '回复 ' + replyTo + '...' : '写下你的评论...'}}"
+      value="{{inputContent}}"
+      bindinput="onInput"
+      bindconfirm="submitComment"
+    />
+    <button class="submit-btn" bindtap="submitComment" disabled="{{!inputContent}}">发送</button>
+  </view>
+</view>

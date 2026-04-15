@@ -1,0 +1,177 @@
+/* pages/comment/comment.wxss */
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding-bottom: 100rpx;
+}
+
+.comment-list {
+  background-color: white;
+  padding: 20rpx;
+}
+
+.list-header {
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+  margin-bottom: 20rpx;
+}
+
+.list-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.empty-tip {
+  text-align: center;
+  color: #999;
+  font-size: 28rpx;
+  padding: 80rpx 0;
+}
+
+.comment-item {
+  display: flex;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.comment-item:last-child {
+  border-bottom: none;
+}
+
+.user-avatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+
+.comment-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.user-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.comment-time {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.comment-text {
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 16rpx;
+}
+
+.comment-actions {
+  display: flex;
+  gap: 32rpx;
+}
+
+.action-item {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.action-icon {
+  font-size: 28rpx;
+}
+
+.action-count {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.action-text {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.reply-list {
+  background-color: #f9f9f9;
+  border-radius: 8rpx;
+  padding: 16rpx;
+  margin-top: 16rpx;
+}
+
+.reply-item {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 8rpx;
+}
+
+.reply-item:last-child {
+  margin-bottom: 0;
+}
+
+.reply-user {
+  color: #007aff;
+  font-weight: bold;
+}
+
+.reply-text {
+  color: #333;
+}
+
+.more-reply {
+  font-size: 24rpx;
+  color: #007aff;
+  margin-top: 12rpx;
+}
+
+.comment-input-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  padding: 16rpx 20rpx;
+  background-color: white;
+  border-top: 1rpx solid #f0f0f0;
+  padding-bottom: calc(16rpx + env(safe-area-inset-bottom));
+}
+
+.comment-input {
+  flex: 1;
+  height: 72rpx;
+  padding: 0 20rpx;
+  background-color: #f5f5f5;
+  border-radius: 36rpx;
+  font-size: 28rpx;
+}
+
+.submit-btn {
+  width: 120rpx;
+  height: 72rpx;
+  line-height: 72rpx;
+  margin-left: 16rpx;
+  padding: 0;
+  font-size: 28rpx;
+  background-color: #007aff;
+  color: white;
+  border-radius: 36rpx;
+}
+
+.submit-btn[disabled] {
+  background-color: #ccc;
+}

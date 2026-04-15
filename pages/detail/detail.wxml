@@ -7,10 +7,61 @@
   <view class="spot-info">
     <text class="spot-name">{{spot.name}}</text>
     <view class="spot-type">
-      <text class="type-tag">{{spot.type === 'movie' ? '影视取景地' : '游戏IP关联点'}}</text>
+      <text class="type-tag">{{spot.type === 'movie' ? '影视取景地' : (spot.type === 'game' ? '游戏IP关联点' : (spot.type === 'culture' ? '文化古迹' : '自然风光'))}}</text>
     </view>
     <view class="spot-description">
       {{spot.description}}
+    </view>
+  </view>
+  
+  <!-- 打卡统计 -->
+  <view class="checkin-stats">
+    <view class="stat-item">
+      <text class="stat-number">{{totalCheckins}}</text>
+      <text class="stat-label">累计打卡</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-number">{{continuousDays}}</text>
+      <text class="stat-label">连续打卡</text>
+    </view>
+  </view>
+  
+  <!-- 距离提示 -->
+  <view class="distance-tip" wx:if="{{distanceToSpot !== null}}">
+    <text class="distance-text" wx:if="{{canCheckinByLocation}}">📍 您距离该点位 {{distanceToSpot}} 米，可以打卡</text>
+    <text class="distance-text warning" wx:else>⚠️ 您距离该点位 {{distanceToSpot}} 米，需要距离 {{checkinDistance}} 米内才能打卡</text>
+  </view>
+  
+  <!-- 照片上传区域 -->
+  <view class="photo-section" wx:if="{{!isCheckedIn}}">
+    <text class="section-title">打卡照片（最多3张）</text>
+    <view class="photo-grid">
+      <view class="photo-item" wx:for="{{checkinPhotos}}" wx:key="index">
+        <image class="photo-preview" src="{{item}}" mode="aspectFill" bindtap="previewPhoto" data-url="{{item}}"></image>
+        <view class="photo-delete" bindtap="deletePhoto" data-index="{{index}}">×</view>
+      </view>
+      <view class="photo-add" wx:if="{{checkinPhotos.length < 3}}" bindtap="choosePhoto">
+        <text class="add-icon">+</text>
+        <text class="add-text">添加照片</text>
+      </view>
+    </view>
+    <view class="photo-actions">
+      <button class="photo-btn" bindtap="takePhoto">📷 拍照</button>
+      <button class="photo-btn" bindtap="choosePhoto">🖼️ 相册</button>
+    </view>
+  </view>
+  
+  <!-- 已打卡照片展示 -->
+  <view class="photo-section" wx:if="{{isCheckedIn && checkinPhotos.length > 0}}">
+    <text class="section-title">打卡照片</text>
+    <view class="photo-grid">
+      <view class="photo-item" wx:for="{{checkinPhotos}}" wx:key="index">
+        <image class="photo-preview" src="{{item}}" mode="aspectFill" bindtap="previewPhoto" data-url="{{item}}"></image>
+      </view>
+    </view>
+    <view class="review-status">
+      <text class="review-label">审核状态：</text>
+      <text class="review-value status-{{reviewStatus}}">{{reviewStatusText[reviewStatus]}}</text>
     </view>
   </view>
   
@@ -23,5 +74,48 @@
     >
       {{isCheckingIn ? '打卡中...' : (isCheckedIn ? '已打卡' : '打卡')}}
     </button>
+    <button 
+      class="makeup-btn" 
+      bindtap="showMakeupModal"
+      wx:if="{{canMakeup && !isCheckedIn}}"
+    >
+      申请补签
+    </button>
+  </view>
+  
+  <!-- 照片预览弹窗 -->
+  <view class="photo-modal" wx:if="{{showPhotoModal}}" bindtap="hidePhotoModal">
+    <image class="modal-photo" src="{{currentPhoto}}" mode="aspectFit"></image>
+  </view>
+  
+  <!-- 补签弹窗 -->
+  <view class="modal-mask" wx:if="{{showMakeupModal}}" bindtap="hideMakeupModal"></view>
+  <view class="modal-content" wx:if="{{showMakeupModal}}">
+    <view class="modal-header">
+      <text class="modal-title">申请补签</text>
+      <text class="modal-close" bindtap="hideMakeupModal">×</text>
+    </view>
+    <view class="modal-body">
+      <view class="form-item">
+        <text class="form-label">补签原因</text>
+        <textarea class="form-textarea" placeholder="请说明补签原因（如：GPS定位不准等）" value="{{makeupReason}}" bindinput="onMakeupReasonInput" />
+      </view>
+      <view class="form-item">
+        <text class="form-label">上传照片凭证</text>
+        <view class="photo-grid">
+          <view class="photo-item" wx:for="{{checkinPhotos}}" wx:key="index">
+            <image class="photo-preview" src="{{item}}" mode="aspectFill"></image>
+            <view class="photo-delete" bindtap="deletePhoto" data-index="{{index}}">×</view>
+          </view>
+          <view class="photo-add" wx:if="{{checkinPhotos.length < 3}}" bindtap="choosePhoto">
+            <text class="add-icon">+</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="modal-footer">
+      <button class="modal-btn cancel-btn" bindtap="hideMakeupModal">取消</button>
+      <button class="modal-btn confirm-btn" bindtap="submitMakeup">提交</button>
+    </view>
   </view>
 </view>
