@@ -15,7 +15,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "仙都影游打卡",
+    "navigationBarTitleText": "Xiandu CineTrail",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
@@ -40,13 +40,7 @@
   },
   "permission": {
     "scope.userLocation": {
-      "desc": "您的位置信息将用于计算与点位的距离"
-    },
-    "scope.writePhotosAlbum": {
-      "desc": "需要相册权限保存海报图片"
-    },
-    "scope.camera": {
-      "desc": "需要相机权限拍摄打卡照片"
+      "desc": "Used for distance calculation and nearby recommendations"
     }
   },
   "requiredPrivateInfos": [

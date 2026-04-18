@@ -11,7 +11,6 @@ Page({
   
   onLoad() {
     this.loadSpots()
-    this.getUserLocation()
   },
   
   onShow() {
@@ -19,23 +18,7 @@ Page({
   },
   
   loadSpots() {
-    wx.cloud.callFunction({
-      name: 'getSpots',
-      success: (res) => {
-        if (res.result.success) {
-          const spots = res.result.spots
-          this.setData({ spots })
-          this.filterSpots()
-        }
-      },
-      fail: (err) => {
-        console.error('获取点位列表失败', err)
-        this.loadLocalSpots()
-      }
-    })
-  },
-  
-  loadLocalSpots() {
+    // 使用本地数据
     const spots = [
       {
         id: 1,
@@ -48,7 +31,8 @@ Page({
         hotScore: 9.8,
         checkinCount: 1256,
         latitude: 28.656,
-        longitude: 119.648
+        longitude: 119.648,
+        distance: '1.2km'
       },
       {
         id: 2,
@@ -61,7 +45,8 @@ Page({
         hotScore: 8.5,
         checkinCount: 856,
         latitude: 28.650,
-        longitude: 119.640
+        longitude: 119.640,
+        distance: '2.3km'
       },
       {
         id: 3,
@@ -74,7 +59,8 @@ Page({
         hotScore: 7.2,
         checkinCount: 542,
         latitude: 28.660,
-        longitude: 119.655
+        longitude: 119.655,
+        distance: '0.8km'
       },
       {
         id: 4,
@@ -87,67 +73,12 @@ Page({
         hotScore: 8.0,
         checkinCount: 678,
         latitude: 28.645,
-        longitude: 119.660
+        longitude: 119.660,
+        distance: '1.5km'
       }
     ]
-    this.setData({ spots })
-    this.filterSpots()
-  },
-  
-  getUserLocation() {
-    wx.getLocation({
-      type: 'gcj02',
-      success: (res) => {
-        this.setData({ userLocation: { latitude: res.latitude, longitude: res.longitude } })
-        this.calculateDistances()
-      },
-      fail: (err) => {
-        console.error('获取位置失败', err)
-      }
-    })
-  },
-  
-  calculateDistances() {
-    const { spots, userLocation } = this.data
-    if (!userLocation) return
     
-    const updatedSpots = spots.map(spot => {
-      const distance = this.calculateDistance(
-        userLocation.latitude,
-        userLocation.longitude,
-        spot.latitude,
-        spot.longitude
-      )
-      spot.distance = this.formatDistance(distance)
-      return spot
-    })
-    this.setData({ spots: updatedSpots })
-    this.filterSpots()
-  },
-  
-  calculateDistance(lat1, lng1, lat2, lng2) {
-    const rad = (d) => d * Math.PI / 180.0
-    const EARTH_RADIUS = 6378.137
-    
-    const radLat1 = rad(lat1)
-    const radLat2 = rad(lat2)
-    const a = radLat1 - radLat2
-    const b = rad(lng1) - rad(lng2)
-    
-    let s = 2 * Math.asin(Math.sqrt(
-      Math.pow(Math.sin(a / 2), 2) +
-      Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)
-    ))
-    s = s * EARTH_RADIUS
-    return Math.round(s * 1000)
-  },
-  
-  formatDistance(meters) {
-    if (meters < 1000) {
-      return meters + 'm'
-    } else {
-      return (meters / 1000).toFixed(1) + 'km'
-    }
+    this.setData({ spots, filteredSpots: spots })
   },
   
   onSearchInput(e) {

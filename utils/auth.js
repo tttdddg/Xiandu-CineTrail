@@ -56,7 +56,7 @@ function requireLogin() {
 function requireRole(minRole) {
   return new Promise((resolve, reject) => {
     const userRole = getUserRole()
-    
+
     if (userRole >= minRole) {
       resolve(getUserInfo())
     } else {
@@ -77,24 +77,24 @@ function requireAdmin() {
 function checkPermission(permission) {
   const userInfo = getUserInfo()
   if (!userInfo) return false
-  
+
   const permissions = userInfo.permissions || []
   return permissions.includes(permission) || permissions.includes('*')
 }
 
 function withAuth(handler, options = {}) {
   const { minRole = UserRole.USER, permission = null } = options
-  
-  return async function(event, context) {
+
+  return async function (event, context) {
     try {
       if (minRole > UserRole.GUEST) {
         await requireRole(minRole)
       }
-      
+
       if (permission && !checkPermission(permission)) {
         throw createError(ErrorCode.PERMISSION_DENIED)
       }
-      
+
       return await handler(event, context)
     } catch (error) {
       logger.error('权限验证失败', error)
