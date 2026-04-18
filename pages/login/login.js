@@ -5,7 +5,6 @@ Page({
   },
   
   onLoad() {
-    // 检查是否已登录
     const userInfo = wx.getStorageSync('userInfo')
     if (userInfo) {
       wx.switchTab({ url: '/pages/home/home' })
@@ -17,41 +16,28 @@ Page({
     
     this.setData({ isLoading: true })
     
-    // 调用微信登录API
-    wx.login({
-      success: (res) => {
-        if (res.code) {
-          // 调用云函数获取openId
-          wx.cloud.callFunction({
-            name: 'login',
-            data: {
-              code: res.code
-            },
-            success: (cloudRes) => {
-              const userInfo = cloudRes.result.userInfo
-              wx.setStorageSync('userInfo', userInfo)
-              getApp().globalData.userInfo = userInfo
-              wx.switchTab({ url: '/pages/home/home' })
-            },
-            fail: (err) => {
-              console.error('登录失败', err)
-              wx.showToast({ title: '登录失败，请重试', icon: 'none' })
-            },
-            complete: () => {
-              this.setData({ isLoading: false })
-            }
-          })
-        } else {
-          console.error('登录失败：', res.errMsg)
-          wx.showToast({ title: '登录失败，请重试', icon: 'none' })
-          this.setData({ isLoading: false })
-        }
-      },
-      fail: (err) => {
-        console.error('登录失败：', err)
-        wx.showToast({ title: '登录失败，请重试', icon: 'none' })
-        this.setData({ isLoading: false })
+    // 模拟登录，使用本地数据
+    setTimeout(() => {
+      const userInfo = {
+        openId: 'user_' + Date.now(),
+        nickName: '旅行达人',
+        avatarUrl: 'https://via.placeholder.com/120',
+        role: 1,
+        level: 1,
+        growthValue: 0,
+        totalChecks: 0
       }
-    })
+      
+      wx.setStorageSync('userInfo', userInfo)
+      getApp().globalData.userInfo = userInfo
+      
+      this.setData({ isLoading: false })
+      
+      wx.showToast({ title: '登录成功', icon: 'success' })
+      
+      setTimeout(() => {
+        wx.switchTab({ url: '/pages/home/home' })
+      }, 1000)
+    }, 500)
   }
 })

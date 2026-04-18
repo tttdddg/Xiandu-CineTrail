@@ -1,0 +1,253 @@
+/* pages/admin/user-manage.wxss */
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.stats-row {
+  display: flex;
+  padding: 20rpx;
+  background-color: white;
+  margin-bottom: 20rpx;
+}
+
+.stat-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16rpx;
+}
+
+.stat-number {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #007aff;
+  margin-bottom: 8rpx;
+}
+
+.stat-label {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.search-bar {
+  padding: 16rpx 20rpx;
+  background-color: white;
+  margin-bottom: 20rpx;
+}
+
+.search-input {
+  width: 100%;
+  height: 64rpx;
+  padding: 0 20rpx;
+  background-color: #f5f5f5;
+  border-radius: 32rpx;
+  font-size: 28rpx;
+}
+
+.user-list {
+  background-color: white;
+  padding: 20rpx;
+}
+
+.list-header {
+  padding-bottom: 16rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  margin-bottom: 16rpx;
+}
+
+.list-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.empty-tip {
+  text-align: center;
+  color: #999;
+  font-size: 28rpx;
+  padding: 60rpx 0;
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.user-item:last-child {
+  border-bottom: none;
+}
+
+.user-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  margin-right: 16rpx;
+}
+
+.user-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8rpx;
+}
+
+.user-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-right: 12rpx;
+}
+
+.user-role {
+  padding: 4rpx 12rpx;
+  border-radius: 12rpx;
+  font-size: 22rpx;
+}
+
+.role-user {
+  background-color: #e6f7ff;
+  color: #007aff;
+}
+
+.role-admin {
+  background-color: #fff7e6;
+  color: #ff9800;
+}
+
+.role-super_admin {
+  background-color: #fff1f0;
+  color: #ff4d4f;
+}
+
+.user-stats {
+  display: flex;
+  gap: 16rpx;
+}
+
+.stat-text {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.user-actions {
+  display: flex;
+  gap: 12rpx;
+}
+
+.action-btn {
+  padding: 8rpx 16rpx;
+  font-size: 24rpx;
+  border-radius: 8rpx;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.action-btn.danger {
+  background-color: #fff1f0;
+  color: #ff4d4f;
+}
+
+.action-btn.success {
+  background-color: #f6ffed;
+  color: #52c41a;
+}
+
+.modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.modal-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-height: 80vh;
+  background-color: white;
+  border-radius: 12rpx;
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.modal-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.modal-close {
+  font-size: 48rpx;
+  color: #999;
+  line-height: 1;
+}
+
+.modal-body {
+  flex: 1;
+  padding: 24rpx;
+  overflow-y: auto;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.detail-label {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.detail-value {
+  font-size: 28rpx;
+  color: #333;
+}
+
+.modal-footer {
+  display: flex;
+  padding: 24rpx;
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.modal-btn {
+  flex: 1;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 28rpx;
+  border-radius: 8rpx;
+  margin: 0 8rpx;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.modal-btn.primary {
+  background-color: #007aff;
+  color: white;
+}

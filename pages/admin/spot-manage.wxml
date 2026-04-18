@@ -1,0 +1,123 @@
+<!-- pages/admin/spot-manage.wxml -->
+<view class="container">
+  <!-- 顶部操作栏 -->
+  <view class="header">
+    <text class="title">点位管理中心</text>
+    <button class="add-btn" bindtap="showAddModal">+ 添加点位</button>
+  </view>
+  
+  <!-- 统计卡片 -->
+  <view class="stats-cards">
+    <view class="stat-card">
+      <text class="stat-number">{{totalSpots}}</text>
+      <text class="stat-label">总点位数</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-number">{{movieCount}}</text>
+      <text class="stat-label">影视取景地</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-number">{{gameCount}}</text>
+      <text class="stat-label">游戏IP关联点</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-number">{{totalCheckins}}</text>
+      <text class="stat-label">总打卡数</text>
+    </view>
+  </view>
+  
+  <!-- 点位列表 -->
+  <view class="spot-list">
+    <view class="list-header">
+      <text class="list-title">点位列表</text>
+    </view>
+    
+    <view class="empty-tip" wx:if="{{spots.length === 0}}">
+      暂无点位数据
+    </view>
+    
+    <view class="spot-item" wx:for="{{spots}}" wx:key="id">
+      <image class="spot-cover" src="{{item.coverImage}}" mode="aspectFill"></image>
+      <view class="spot-info">
+        <view class="spot-header">
+          <text class="spot-name">{{item.name}}</text>
+          <view class="hot-badge">
+            <text class="hot-icon">🔥</text>
+            <text class="hot-value">{{item.hotScore}}</text>
+          </view>
+        </view>
+        <text class="spot-type">{{item.typeName}}</text>
+        <text class="spot-desc">{{item.description}}</text>
+        <view class="spot-stats">
+          <text class="stat-item">打卡数: {{item.checkinCount}}</text>
+          <text class="stat-item">热度: {{item.hotScore}}</text>
+        </view>
+        <view class="spot-actions">
+          <button class="action-btn edit-btn" bindtap="editSpot" data-id="{{item.id}}">编辑</button>
+          <button class="action-btn delete-btn" bindtap="deleteSpot" data-id="{{item.id}}">删除</button>
+          <button class="action-btn hot-btn" bindtap="updateHotScore" data-id="{{item.id}}">更新热度</button>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 添加/编辑弹窗 -->
+  <view class="modal-mask" wx:if="{{showModal}}" bindtap="hideModal"></view>
+  <view class="modal-content" wx:if="{{showModal}}">
+    <view class="modal-header">
+      <text class="modal-title">{{isEdit ? '编辑点位' : '添加点位'}}</text>
+      <text class="modal-close" bindtap="hideModal">×</text>
+    </view>
+    
+    <view class="modal-body">
+      <view class="form-item">
+        <text class="form-label">点位名称</text>
+        <input class="form-input" placeholder="请输入点位名称" value="{{formData.name}}" bindinput="onInputChange" data-field="name" />
+      </view>
+      
+      <view class="form-item">
+        <text class="form-label">点位类型</text>
+        <picker mode="selector" range="{{typeOptions}}" range-key="label" value="{{typeIndex}}" bindchange="onTypeChange">
+          <view class="form-picker">
+            {{typeOptions[typeIndex].label}}
+          </view>
+        </picker>
+      </view>
+      
+      <view class="form-item">
+        <text class="form-label">封面图片</text>
+        <input class="form-input" placeholder="请输入图片URL" value="{{formData.coverImage}}" bindinput="onInputChange" data-field="coverImage" />
+      </view>
+      
+      <view class="form-item">
+        <text class="form-label">纬度</text>
+        <input class="form-input" type="digit" placeholder="请输入纬度" value="{{formData.latitude}}" bindinput="onInputChange" data-field="latitude" />
+      </view>
+      
+      <view class="form-item">
+        <text class="form-label">经度</text>
+        <input class="form-input" type="digit" placeholder="请输入经度" value="{{formData.longitude}}" bindinput="onInputChange" data-field="longitude" />
+      </view>
+      
+      <view class="form-item">
+        <text class="form-label">详细描述</text>
+        <textarea class="form-textarea" placeholder="请输入详细描述" value="{{formData.description}}" bindinput="onInputChange" data-field="description" />
+      </view>
+      
+      <view class="form-item">
+        <text class="form-label">标签（用逗号分隔）</text>
+        <input class="form-input" placeholder="例如：仙剑奇侠传,热门" value="{{formData.tagsStr}}" bindinput="onInputChange" data-field="tagsStr" />
+      </view>
+      
+      <view class="form-item">
+        <text class="form-label">热度值</text>
+        <input class="form-input" type="digit" placeholder="0-10分" value="{{formData.hotScore}}" bindinput="onInputChange" data-field="hotScore" />
+      </view>
+    </view>
+    
+    <view class="modal-footer">
+      <button class="modal-btn cancel-btn" bindtap="hideModal">取消</button>
+      <button class="modal-btn confirm-btn" bindtap="submitForm">确定</button>
+    </view>
+  </view>
+</view>

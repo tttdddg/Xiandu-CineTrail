@@ -1,0 +1,107 @@
+<!-- pages/admin/user-manage.wxml -->
+<view class="container">
+  <!-- 统计卡片 -->
+  <view class="stats-row">
+    <view class="stat-card">
+      <text class="stat-number">{{totalUsers}}</text>
+      <text class="stat-label">总用户数</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-number">{{todayUsers}}</text>
+      <text class="stat-label">今日新增</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-number">{{activeUsers}}</text>
+      <text class="stat-label">活跃用户</text>
+    </view>
+  </view>
+  
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <input class="search-input" placeholder="搜索用户昵称" bindinput="onSearch" value="{{searchKeyword}}" />
+  </view>
+  
+  <!-- 用户列表 -->
+  <view class="user-list">
+    <view class="list-header">
+      <text class="list-title">用户列表</text>
+    </view>
+    
+    <view class="empty-tip" wx:if="{{filteredUsers.length === 0}}">
+      暂无用户数据
+    </view>
+    
+    <view class="user-item" wx:for="{{filteredUsers}}" wx:key="id">
+      <image class="user-avatar" src="{{item.avatarUrl || 'https://via.placeholder.com/80'}}"></image>
+      <view class="user-info">
+        <view class="user-header">
+          <text class="user-name">{{item.nickName || '未设置昵称'}}</text>
+          <view class="user-role role-{{item.role}}">
+            {{item.roleName}}
+          </view>
+        </view>
+        <view class="user-stats">
+          <text class="stat-text">打卡: {{item.totalChecks || 0}}</text>
+          <text class="stat-text">等级: Lv.{{item.level || 1}}</text>
+          <text class="stat-text">{{item.lastActiveText}}</text>
+        </view>
+      </view>
+      <view class="user-actions">
+        <button class="action-btn" bindtap="viewUserDetail" data-id="{{item.id}}">详情</button>
+        <button class="action-btn {{item.status === 'banned' ? 'success' : 'danger'}}" 
+          bindtap="toggleUserStatus" 
+          data-id="{{item.id}}"
+          data-status="{{item.status}}">
+          {{item.status === 'banned' ? '解禁' : '禁用'}}
+        </button>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 用户详情弹窗 -->
+  <view class="modal-mask" wx:if="{{showDetailModal}}" bindtap="hideDetailModal"></view>
+  <view class="modal-content" wx:if="{{showDetailModal}}">
+    <view class="modal-header">
+      <text class="modal-title">用户详情</text>
+      <text class="modal-close" bindtap="hideDetailModal">×</text>
+    </view>
+    <view class="modal-body" wx:if="{{selectedUser}}">
+      <view class="detail-item">
+        <text class="detail-label">用户ID</text>
+        <text class="detail-value">{{selectedUser.id}}</text>
+      </view>
+      <view class="detail-item">
+        <text class="detail-label">昵称</text>
+        <text class="detail-value">{{selectedUser.nickName}}</text>
+      </view>
+      <view class="detail-item">
+        <text class="detail-label">角色</text>
+        <text class="detail-value">{{selectedUser.roleName}}</text>
+      </view>
+      <view class="detail-item">
+        <text class="detail-label">等级</text>
+        <text class="detail-value">Lv.{{selectedUser.level}}</text>
+      </view>
+      <view class="detail-item">
+        <text class="detail-label">打卡数</text>
+        <text class="detail-value">{{selectedUser.totalChecks}}</text>
+      </view>
+      <view class="detail-item">
+        <text class="detail-label">成长值</text>
+        <text class="detail-value">{{selectedUser.growthValue}}</text>
+      </view>
+      <view class="detail-item">
+        <text class="detail-label">注册时间</text>
+        <text class="detail-value">{{selectedUser.createdAtText}}</text>
+      </view>
+      <view class="detail-item">
+        <text class="detail-label">最后活跃</text>
+        <text class="detail-value">{{selectedUser.lastActiveText}}</text>
+      </view>
+    </view>
+    <view class="modal-footer">
+      <button class="modal-btn" bindtap="editUserRole" data-id="{{selectedUser.id}}">修改角色</button>
+      <button class="modal-btn primary" bindtap="hideDetailModal">关闭</button>
+    </view>
+  </view>
+</view>

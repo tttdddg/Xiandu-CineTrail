@@ -1,0 +1,106 @@
+<!-- pages/admin/statistics.wxml -->
+<view class="container">
+  <!-- 概览卡片 -->
+  <view class="overview-section">
+    <view class="overview-title">数据概览</view>
+    <view class="overview-grid">
+      <view class="overview-item">
+        <text class="overview-value">{{stats.totalUsers}}</text>
+        <text class="overview-label">总用户数</text>
+      </view>
+      <view class="overview-item">
+        <text class="overview-value">{{stats.totalSpots}}</text>
+        <text class="overview-label">总点位数</text>
+      </view>
+      <view class="overview-item">
+        <text class="overview-value">{{stats.totalCheckins}}</text>
+        <text class="overview-label">总打卡数</text>
+      </view>
+      <view class="overview-item">
+        <text class="overview-value">{{stats.todayCheckins}}</text>
+        <text class="overview-label">今日打卡</text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 趋势图表 -->
+  <view class="chart-section">
+    <view class="section-header">
+      <text class="section-title">打卡趋势</text>
+      <view class="time-tabs">
+        <text class="time-tab {{timeRange === 'week' ? 'active' : ''}}" bindtap="changeTimeRange" data-range="week">近7天</text>
+        <text class="time-tab {{timeRange === 'month' ? 'active' : ''}}" bindtap="changeTimeRange" data-range="month">近30天</text>
+      </view>
+    </view>
+    <view class="chart-container">
+      <view class="chart-bar" wx:for="{{trendData}}" wx:key="index">
+        <view class="bar-wrapper">
+          <view class="bar-value" style="height: {{item.percent}}%"></view>
+        </view>
+        <text class="bar-label">{{item.label}}</text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 热门点位 -->
+  <view class="hot-section">
+    <view class="section-header">
+      <text class="section-title">热门点位 TOP5</text>
+    </view>
+    <view class="hot-list">
+      <view class="hot-item" wx:for="{{hotSpots}}" wx:key="id">
+        <view class="hot-rank rank-{{index + 1}}">{{index + 1}}</view>
+        <view class="hot-info">
+          <text class="hot-name">{{item.name}}</text>
+          <view class="hot-stats">
+            <text class="hot-stat">打卡: {{item.checkinCount}}</text>
+            <text class="hot-stat">热度: {{item.hotScore}}</text>
+          </view>
+        </view>
+        <view class="hot-trend trend-{{item.trend}}">
+          {{item.trend === 'up' ? '↑' : (item.trend === 'down' ? '↓' : '-')}}
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 用户活跃度 -->
+  <view class="activity-section">
+    <view class="section-header">
+      <text class="section-title">用户活跃度</text>
+    </view>
+    <view class="activity-grid">
+      <view class="activity-item">
+        <text class="activity-value">{{activity.daily}}</text>
+        <text class="activity-label">日活用户</text>
+      </view>
+      <view class="activity-item">
+        <text class="activity-value">{{activity.weekly}}</text>
+        <text class="activity-label">周活用户</text>
+      </view>
+      <view class="activity-item">
+        <text class="activity-value">{{activity.monthly}}</text>
+        <text class="activity-label">月活用户</text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 分类统计 -->
+  <view class="category-section">
+    <view class="section-header">
+      <text class="section-title">点位分类统计</text>
+    </view>
+    <view class="category-list">
+      <view class="category-item" wx:for="{{categoryStats}}" wx:key="type">
+        <view class="category-info">
+          <text class="category-name">{{item.name}}</text>
+          <text class="category-count">{{item.count}}个点位</text>
+        </view>
+        <view class="category-bar">
+          <view class="category-progress" style="width: {{item.percent}}%"></view>
+        </view>
+        <text class="category-percent">{{item.percent}}%</text>
+      </view>
+    </view>
+  </view>
+</view>

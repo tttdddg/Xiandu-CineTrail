@@ -1,0 +1,50 @@
+<!-- pages/message/message.wxml -->
+<view class="container">
+  <!-- 消息分类 -->
+  <view class="message-tabs">
+    <view class="tab-item {{currentTab === 'all' ? 'active' : ''}}" bindtap="switchTab" data-tab="all">
+      全部
+    </view>
+    <view class="tab-item {{currentTab === 'system' ? 'active' : ''}}" bindtap="switchTab" data-tab="system">
+      系统通知
+    </view>
+    <view class="tab-item {{currentTab === 'like' ? 'active' : ''}}" bindtap="switchTab" data-tab="like">
+      点赞
+    </view>
+    <view class="tab-item {{currentTab === 'comment' ? 'active' : ''}}" bindtap="switchTab" data-tab="comment">
+      评论
+    </view>
+  </view>
+  
+  <!-- 消息列表 -->
+  <view class="message-list">
+    <view class="empty-tip" wx:if="{{filteredMessages.length === 0}}">
+      暂无消息
+    </view>
+    
+    <view class="message-item {{item.isRead ? '' : 'unread'}}" 
+      wx:for="{{filteredMessages}}" 
+      wx:key="id"
+      bindtap="viewMessage"
+      data-id="{{item.id}}"
+    >
+      <view class="message-icon">
+        <text class="icon-text">{{item.type === 'system' ? '📢' : (item.type === 'like' ? '❤️' : '💬')}}</text>
+      </view>
+      <view class="message-content">
+        <view class="message-header">
+          <text class="message-title">{{item.title}}</text>
+          <text class="message-time">{{item.timeText}}</text>
+        </view>
+        <text class="message-desc">{{item.content}}</text>
+      </view>
+      <view class="unread-dot" wx:if="{{!item.isRead}}"></view>
+    </view>
+  </view>
+  
+  <!-- 操作按钮 -->
+  <view class="action-bar" wx:if="{{messages.length > 0}}">
+    <button class="action-btn" bindtap="markAllRead">全部已读</button>
+    <button class="action-btn danger" bindtap="clearAllMessages">清空消息</button>
+  </view>
+</view>

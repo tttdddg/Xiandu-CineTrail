@@ -3,33 +3,49 @@
     "pages/login/login",
     "pages/home/home",
     "pages/detail/detail",
-    "pages/mine/mine"
+    "pages/mine/mine",
+    "pages/spot-list/spot-list",
+    "pages/comment/comment",
+    "pages/poster/poster",
+    "pages/message/message",
+    "pages/admin/spot-manage",
+    "pages/admin/user-manage",
+    "pages/admin/statistics"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "仙都影游打卡",
+    "navigationBarTitleText": "Xiandu CineTrail",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
     "color": "#666",
-    "selectedColor": "#333",
+    "selectedColor": "#007aff",
     "backgroundColor": "#fff",
     "borderStyle": "black",
     "list": [
       {
         "pagePath": "pages/home/home",
-        "text": "首页",
-        "iconPath": "images/home.png",
-        "selectedIconPath": "images/home-active.png"
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/spot-list/spot-list",
+        "text": "点位"
       },
       {
         "pagePath": "pages/mine/mine",
-        "text": "我的",
-        "iconPath": "images/mine.png",
-        "selectedIconPath": "images/mine-active.png"
+        "text": "我的"
       }
     ]
   },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "Used for distance calculation and nearby recommendations"
+    }
+  },
+  "requiredPrivateInfos": [
+    "getLocation",
+    "chooseLocation"
+  ],
   "sitemapLocation": "sitemap.json"
 }
